@@ -1,0 +1,43 @@
+# Example TidyUp rules. Rules are checked top to bottom; the first match wins.
+# Every condition under `match` must be true (AND). Destinations are folders
+# relative to the folder you organize, and are created when needed.
+#
+# Match conditions:
+#   extensions:      list of extensions, case-insensitive, with or without the dot
+#   glob:            shell-style pattern on the file name, case-insensitive ("*.pdf", "IMG_*")
+#   regex:           Python regular expression searched in the file name
+#                    (case-sensitive; start it with (?i) to ignore case)
+#   older_than_days: last modified at least this many days ago
+#   newer_than_days: last modified at most this many days ago
+
+rules:
+  - name: Screenshots
+    match:
+      regex: "^(Screenshot|Screen Shot)"
+    destination: Images/Screenshots
+
+  - name: Images
+    match:
+      extensions: [jpg, jpeg, png, gif, heic, webp]
+    destination: Images
+
+  - name: Old PDFs
+    match:
+      glob: "*.pdf"
+      older_than_days: 30
+    destination: Archive/PDFs
+
+  - name: Documents
+    match:
+      extensions: [pdf, docx, txt, md]
+    destination: Documents
+
+  - name: Installers
+    match:
+      extensions: [dmg, pkg, exe, msi]
+    destination: Installers
+
+  - name: Archives
+    match:
+      extensions: [zip, tar, gz, 7z, rar]
+    destination: Archives
